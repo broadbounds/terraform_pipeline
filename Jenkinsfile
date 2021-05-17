@@ -42,7 +42,7 @@ pipeline {
 
         stage('TerraformPlan'){
             steps {
-                dir('./'){
+                dir('terraform_pipeline/'){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
