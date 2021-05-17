@@ -16,7 +16,7 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('terraform_pipeline/'){
+                dir('./'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
@@ -26,7 +26,7 @@ pipeline {
 
         stage('TerraformFormat'){
             steps {
-                dir('terraform_pipeline/'){
+                dir('./'){
                     sh "terraform fmt -list=true -write=false -diff=true -check=true"
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
 
         stage('TerraformValidate'){
             steps {
-                dir('terraform_pipeline/'){
+                dir('./'){
                     sh "terraform validate"
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
 
         stage('TerraformPlan'){
             steps {
-                dir('terraform_pipeline/'){
+                dir('./'){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
@@ -68,7 +68,7 @@ pipeline {
                          currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir('terraform_pipeline/'){
+                        dir('./'){
                             unstash "terraform-plan"
                             sh 'terraform apply terraform.tfplan'
                         }
