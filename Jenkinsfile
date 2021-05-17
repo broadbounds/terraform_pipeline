@@ -16,7 +16,7 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('./'){
+                dir('terraform_pipeline/'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
