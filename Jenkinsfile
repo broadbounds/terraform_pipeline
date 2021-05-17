@@ -16,34 +16,27 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('terraform_pipeline/'){
-                    sh "terraform init -input=false"
+                sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
-                }
             }
         }
 
         stage('TerraformFormat'){
             steps {
-                dir('terraform_pipeline/'){
-                    sh "terraform fmt -list=true -write=false -diff=true -check=true"
-                }
+                sh "terraform fmt -list=true -write=false -diff=true -check=true"
             }
         }
 
         stage('TerraformValidate'){
             steps {
-                dir('terraform_pipeline/'){
-                    sh "terraform validate"
-                }
+                sh "terraform validate"
             }
         }
 
         stage('TerraformPlan'){
             steps {
-                dir('terraform_pipeline/'){
-                    script {
+                script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
                         } catch (err) {
@@ -53,7 +46,6 @@ pipeline {
                         -out terraform.tfplan;echo \$? > status"
                         stash name: "terraform-plan", includes: "terraform.tfplan"
                     }
-                }
             }
         }
         stage('TerraformApply'){
@@ -68,10 +60,8 @@ pipeline {
                          currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir('terraform_pipeline/'){
-                            unstash "terraform-plan"
+                        unstash "terraform-plan"
                             sh 'terraform apply terraform.tfplan'
-                        }
                     }
                 }
             }
