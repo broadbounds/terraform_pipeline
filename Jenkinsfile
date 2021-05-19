@@ -30,16 +30,14 @@ pipeline {
     stage('TerraformPlan'){
         steps {
             script {
-              sh "terraform plan -var 'access_key=${ACCESS_KEY}' -var 'secret_key=${SECRET_KEY}' -out terraform.tfplan;echo \$? > status"
-                stash name: "terraform-plan", includes: "terraform.tfplan"
+              sh "terraform state list;echo \$? > status"
             }
         }
     }
     stage('TerraformApply'){
         steps {
             script{                    
-                unstash "terraform-plan"
-                sh 'terraform apply -destroy'
+                sh 'terraform -var 'access_key=${ACCESS_KEY}' -var 'secret_key=${SECRET_KEY}' destroy'
             }
         }
     }
