@@ -30,15 +30,13 @@ pipeline {
     stage('TerraformPlan'){
         steps {
             script {
-                sh "terraform state list  -out terraform.tfplan;echo \$? > status"
-                stash name: "terraform-plan", includes: "terraform.tfplan"
+                sh "terraform state list"
             }
         }
     }
     stage('TerraformApply'){
         steps {
-            script{                    
-                unstash "terraform-plan"
+            script{
                 sh 'terraform destroy'
             }
         }
