@@ -27,13 +27,7 @@ pipeline {
           }
         }
     }
-    stage('TerraformPlan'){
-        steps {
-            script {
-              sh "terraform state list"
-            }
-        }
-    }
+    
     stage('TerraformApply'){
         steps {
             script{                    
