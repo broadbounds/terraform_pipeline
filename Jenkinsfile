@@ -39,7 +39,7 @@ pipeline {
         steps {
             script{                    
                 unstash "terraform-plan"
-                sh 'terraform apply terraform.tfplan'
+                sh 'terraform destroy --force'
             }
         }
     }
