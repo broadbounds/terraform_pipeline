@@ -31,7 +31,7 @@ pipeline {
     stage('TerraformApply'){
         steps {
             script{                    
-                sh 'terraform  destroy'
+                sh 'terraform destroy --force'
             }
         }
     }
