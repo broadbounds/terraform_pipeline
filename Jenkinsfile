@@ -37,7 +37,7 @@ pipeline {
     stage('TerraformApply'){
         steps {
             script{                    
-                sh 'terraform -var 'access_key=${ACCESS_KEY}' -var 'secret_key=${SECRET_KEY}' destroy'
+                sh 'terraform  destroy'
             }
         }
     }
