@@ -39,7 +39,7 @@ pipeline {
         steps {
             script{                    
                 unstash "terraform-plan"
-                sh 'terraform destroy --force'
+                sh 'terraform destroy -force'
             }
         }
     }
