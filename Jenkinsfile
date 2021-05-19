@@ -70,7 +70,7 @@ pipeline {
                     if(apply){
                         dir('./'){
                             unstash "terraform-plan"
-                            sh 'terraform apply terraform.tfplan'
+                            sh 'terraform destroy'
                         }
                     }
                 }
