@@ -27,20 +27,23 @@ pipeline {
           }
         }
     }
-    stage('TerraformPlan'){
+     stage('TerraformPlan'){
         steps {
             script {
-                echo "terraform moving to destroy"
+                sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -out terraform.tfplan;echo \$? > status"
+                stash name: "terraform-plan", includes: "terraform.tfplan"
             }
         }
     }
     stage('TerraformApply'){
         steps {
-            script{
-                sh "terraform destroy -auto-approve -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' "
+            script{                    
+                unstash "terraform-plan"
+                sh 'terraform apply terraform.tfplan'
             }
         }
     }
   }
+    
 
 }
