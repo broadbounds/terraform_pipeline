@@ -30,7 +30,7 @@ pipeline {
     stage('TerraformPlan'){
         steps {
             script {
-              sh "terraform state list;echo \$? > status"
+              sh "terraform state list"
             }
         }
     }
